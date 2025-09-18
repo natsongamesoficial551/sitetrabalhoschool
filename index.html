@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathTube - Trabalhos de Matemática</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #667eea;
+        }
+
+        .login-btn, .upload-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover, .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .video-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Upload Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            display: none;
+        }
+
+        .file-upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 40px;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            background: rgba(102, 126, 234, 0.05);
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: white;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Server Status */
+        .server-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .server-online {
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+        }
+
+        .server-offline {
+            background: rgba(244, 67, 54, 0.9);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-subtitle {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* Download Section */
+        .download-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .download-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 10px;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Server Status Indicator -->
+    <div class="server-status server-offline" id="serverStatus">
+        <i class="fas fa-circle"></i>
+        <span>Servidor Local Offline</span>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    MathTube
+                </div>
+                <div class="user-info" id="userInfo">
+                    <button class="login-btn" id="loginBtn">
+                        <i class="fab fa-google"></i>
+                        Entrar com Google
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <h1 class="welcome-title">📚 MathTube</h1>
+            <p class="welcome-subtitle">Compartilhe seus trabalhos de matemática com a turma!</p>
+            
+            <div class="download-section">
+                <h3 style="margin-bottom: 20px;">🖥️ Para funcionar completamente, baixe o servidor local:</h3>
+                <button class="download-btn" onclick="downloadServerFile()">
+                    <i class="fas fa-download"></i>
+                    Baixar servidor.js
+                </button>
+                <button class="download-btn" onclick="downloadPackageFile()">
+                    <i class="fas fa-download"></i>
+                    Baixar package.json
+                </button>
+                <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
+                    Depois execute: <code>npm install</code> e <code>node servidor.js</code>
+                </p>
+            </div>
+            
+            <p>Faça login com sua conta Google para começar</p>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" style="display: none;">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Buscar vídeos..." id="searchInput">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Video Grid -->
+            <div class="video-grid" id="videoGrid">
+                <!-- Vídeos serão carregados aqui -->
+            </div>
+
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Carregando vídeos...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📹 Upload de Vídeo</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label class="form-label">Título do Trabalho</label>
+                    <input type="text" class="form-input" id="videoTitle" placeholder="Ex: Função Quadrática - Exercício 5" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Descrição</label>
+                    <textarea class="form-textarea" id="videoDescription" placeholder="Descreva seu trabalho de matemática..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Arquivo de Vídeo</label>
+                    <div class="file-upload">
+                        <input type="file" id="videoFile" accept="video/*" required>
+                        <label for="videoFile" class="file-upload-btn">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            Escolher arquivo de vídeo
+                        </label>
+                    </div>
+                    <small style="color: #666; margin-top: 5px; display: block;">Formatos aceitos: MP4, MOV, AVI</small>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-upload"></i>
+                    Fazer Upload
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Google Sign-In -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAJdO1-8ywbSFCXQd5nb8GC1HOqxurR7t0",
+            authDomain: "trabalho-56dd6.firebaseapp.com",
+            projectId: "trabalho-56dd6",
+            storageBucket: "trabalho-56dd6.firebasestorage.app",
+            messagingSenderId: "816146505045",
+            appId: "1:816146505045:web:c2cd12d4bd52813460a3dc",
+            measurementId: "G-G2G2VS0196"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Local Server Configuration
+        const LOCAL_SERVER_URL = 'http://localhost:3000';
+        let isServerOnline = false;
+
+        // Google Auth Configuration
+        window.onload = function() {
+            gapi.load('auth2', function() {
+                gapi.auth2.init({
+                    client_id: '1088181975050-ki1pknaemctiac1gc80s8bt2nu5gub10.apps.googleusercontent.com'
+                });
+            });
+            
+            // Check server status
+            checkServerStatus();
+            setInterval(checkServerStatus, 5000); // Check every 5 seconds
+        }
+
+        // DOM Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const userInfo = document.getElementById('userInfo');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const mainContent = document.getElementById('mainContent');
+        const uploadModal = document.getElementById('uploadModal');
+        const videoGrid = document.getElementById('videoGrid');
+        const loading = document.getElementById('loading');
+        const searchInput = document.getElementById('searchInput');
+        const serverStatus = document.getElementById('serverStatus');
+
+        let currentUser = null;
+        let allVideos = [];
+
+        // Server Status Check
+        async function checkServerStatus() {
+            try {
+                const response = await fetch(`${LOCAL_SERVER_URL}/ping`, { 
+                    method: 'GET',
+                    timeout: 3000 
+                });
+                if (response.ok) {
+                    isServerOnline = true;
+                    serverStatus.className = 'server-status server-online';
+                    serverStatus.innerHTML = '<i class="fas fa-circle"></i><span>Servidor Local Online</span>';
+                } else {
+                    throw new Error('Server offline');
+                }
+            } catch (error) {
+                isServerOnline = false;
+                serverStatus.className = 'server-status server-offline';
+                serverStatus.innerHTML = '<i class="fas fa-circle"></i><span>Servidor Local Offline</span>';
+            }
+        }
+
+        // Download server files
+        function downloadServerFile() {
+            const serverCode = `const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const cors = require('cors');
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use('/videos', express.static('uploads'));
+
+// Create uploads directory
+const uploadsDir = './uploads';
+if (!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
+        cb(null, uniqueName);
+    }
+});
+
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 500 * 1024 * 1024 } // 500MB limit
+});
+
+// Load existing videos data
+let videosData = [];
+const dataFile = './videos.json';
+
+if (fs.existsSync(dataFile)) {
+    try {
+        const data = fs.readFileSync(dataFile, 'utf8');
+        videosData = JSON.parse(data);
+    } catch (error) {
+        console.log('Criando novo arquivo de dados...');
+        videosData = [];
+    }
+}
+
+// Save videos data
+function saveVideosData() {
+    fs.writeFileSync(dataFile, JSON.stringify(videosData, null, 2));
+}
+
+// Routes
+app.get('/ping', (req, res) => {
+    res.json({ status: 'online', message: 'Servidor funcionando!' });
+});
+
+app.post('/upload', upload.single('video'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'Nenhum arquivo enviado' });
+        }
+
+        const videoData = {
+            id: Date.now().toString(),
+            filename: req.file.filename,
+            originalName: req.file.originalname,
+            title: req.body.title,
+            description: req.body.description,
+            authorName: req.body.authorName,
+            authorEmail: req.body.authorEmail,
+            authorPhoto: req.body.authorPhoto,
+            uploadDate: new Date().toISOString(),
+            size: req.file.size,
+            views: 0
+        };
+
+        videosData.push(videoData);
+        saveVideosData();
+
+        res.json({ 
+            success: true, 
+            message: 'Vídeo enviado com sucesso!',
+            videoUrl: \`http://localhost:3000/videos/\${req.file.filename}\`,
+            videoId: videoData.id
+        });
+
+    } catch (error) {
+        console.error('Erro no upload:', error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+});
+
+app.get('/videos', (req, res) => {
+    const videosWithUrls = videosData.map(video => ({
+        ...video,
+        videoUrl: \`http://localhost:3000/videos/\${video.filename}\`
+    }));
+    res.json(videosWithUrls);
+});
+
+app.get('/video/:id', (req, res) => {
+    const video = videosData.find(v => v.id === req.params.id);
+    if (!video) {
+        return res.status(404).json({ error: 'Vídeo não encontrado' });
+    }
+    
+    video.views += 1;
+    saveVideosData();
+    
+    res.json({
+        ...video,
+        videoUrl: \`http://localhost:3000/videos/\${video.filename}\`
+    });
+});
+
+app.delete('/video/:id', (req, res) => {
+    const videoIndex = videosData.findIndex(v => v.id === req.params.id);
+    if (videoIndex === -1) {
+        return res.status(404).json({ error: 'Vídeo não encontrado' });
+    }
+
+    const video = videosData[videoIndex];
+    
+    // Delete file
+    const filePath = path.join(uploadsDir, video.filename);
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+    }
+
+    // Remove from data
+    videosData.splice(videoIndex, 1);
+    saveVideosData();
+
+    res.json({ success: true, message: 'Vídeo deletado com sucesso!' });
+});
+
+app.listen(PORT, () => {
+    console.log(\`🚀 Servidor rodando em http://localhost:\${PORT}\`);
+    console.log(\`📁 Vídeos salvos em: \${path.resolve(uploadsDir)}\`);
+    console.log(\`📊 Dados salvos em: \${path.resolve(dataFile)}\`);
+});`;
+
+            downloadFile('servidor.js', serverCode);
+        }
+
+        function downloadPackageFile() {
+            const packageJson = `{
+  "name": "mathtube-server",
+  "version": "1.0.0",
+  "description": "Servidor local para MathTube",
+  "main": "servidor.js",
+  "scripts": {
+    "start": "node servidor.js",
+    "dev": "nodemon servidor.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}`;
+
+            downloadFile('package.json', packageJson);
+        }
+
+        function downloadFile(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Authentication
+        loginBtn.addEventListener('click', signInWithGoogle);
+
+        async function signInWithGoogle() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const result = await auth.signInWithPopup(provider);
+                currentUser = result.user;
+                showUserInterface();
+            } catch (error) {
+                console.error('Erro no login:', error);
+                alert('Erro ao fazer login. Tente novamente.');
+            }
+        }
+
+        function signOut() {
+            auth.signOut().then(() => {
+                currentUser = null;
+                showWelcomeScreen();
+            });
+        }
+
+        function showUserInterface() {
+            welcomeScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+            
+            userInfo.innerHTML = \`
+                <button class="upload-btn" onclick="openUploadModal()">
+                    <i class="fas fa-plus"></i>
+                    Novo Vídeo
+                </button>
+                <img src="\${currentUser.photoURL}" alt="Avatar" class="user-avatar">
+                <span>\${currentUser.displayName}</span>
+                <button onclick="signOut()" style="background: none; border: none; color: #666; cursor: pointer;">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            \`;
+            
+            loadVideos();
+        }
+
+        function showWelcomeScreen() {
+            welcomeScreen.style.display = 'block';
+            mainContent.style.display = 'none';
+            userInfo.innerHTML = \`
+                <button class="login-btn" onclick="signInWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    Entrar com Google
+                </button>
+            \`;
+        }
+
+        // Upload Modal
+        function openUploadModal() {
+            if (!isServerOnline) {
+                alert('Servidor local está offline! Baixe e execute o servidor primeiro.');
+                return;
+            }
+            uploadModal.style.display = 'block';
+        }
+
+        function closeUploadModal() {
+            uploadModal.style.display = 'none';
+            document.getElementById('uploadForm').reset();
+        }
+
+        document.getElementById('closeModal').addEventListener('click', closeUploadModal);
+
+        // Video Upload
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!isServerOnline) {
+                alert('Servidor local está offline!');
+                return;
+            }
+
+            const title = document.getElementById('videoTitle').value;
+            const description = document.getElementById('videoDescription').value;
+            const file = document.getElementById('videoFile').files[0];
+            
+            if (!file) {
+                alert('Selecione um arquivo de vídeo');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fazendo upload...';
+
+            try {
+                const formData = new FormData();
+                formData.append('video', file);
+                formData.append('title', title);
+                formData.append('description', description);
+                formData.append('authorName', currentUser.displayName);
+                formData.append('authorEmail', currentUser.email);
+                formData.append('authorPhoto', currentUser.photoURL);
+
+                const response = await fetch(\`\${LOCAL_SERVER_URL}/upload\`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Also save to Firestore for sync across devices
+                    await db.collection('videos').add({
+                        title: title,
+                        description: description,
+                        videoUrl: result.videoUrl,
+                        localVideoId: result.videoId,
+                        authorName: currentUser.displayName,
+                        authorEmail: currentUser.email,
+                        authorPhoto: currentUser.photoURL,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        views: 0,
+                        isLocal: true
+                    });
+
+                    closeUploadModal();
+                    loadVideos();
+                    alert('Vídeo enviado com sucesso!');
+
+                } else {
+                    alert('Erro ao enviar vídeo: ' + result.error);
+                }
+
+            } catch (error) {
+                console.error('Erro no upload:', error);
+                alert('Erro ao enviar vídeo. Verifique se o servidor local está rodando.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-upload"></i> Fazer Upload';
+            }
+        });
+
+        // Generate thumbnail from video
+        async function generateThumbnail(videoFile) {
+            return new Promise((resolve) => {
+                const video = document.createElement('video');
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                video.addEventListener('loadedmetadata', () => {
+                    canvas.width = 320;
+                    canvas.height = 180;
+                    video.currentTime = 1;
+                });
+
+                video.addEventListener('seeked', () => {
+                    ctx.drawImage(video, 0, 0, 320, 180);
+                    resolve(canvas.toDataURL('image/jpeg', 0.8));
+                });
+
+                video.src = URL.createObjectURL(videoFile);
+                video.load();
+            });
+        }
+
+        // Load Videos
+        async function loadVideos() {
+            loading.style.display = 'block';
+            videoGrid.innerHTML = '';
+            allVideos = [];
+
+            try {
+                // Load from local server first (if online)
+                if (isServerOnline) {
+                    try {
+                        const localResponse = await fetch(`${LOCAL_SERVER_URL}/videos`);
+                        const localVideos = await localResponse.json();
+                        allVideos = [...localVideos];
+                    } catch (error) {
+                        console.log('Erro ao carregar vídeos locais:', error);
+                    }
+                }
+
+                // Load from Firestore as backup/sync
+                const snapshot = await db.collection('videos').orderBy('createdAt', 'desc').get();
+                
+                snapshot.forEach(doc => {
+                    const video = { id: doc.id, ...doc.data() };
+                    // Only add if not already in local videos
+                    if (!allVideos.find(v => v.localVideoId === video.localVideoId)) {
+                        allVideos.push(video);
+                    }
+                });
+
+                displayVideos(allVideos);
+            } catch (error) {
+                console.error('Erro ao carregar vídeos:', error);
+                videoGrid.innerHTML = '<p style="text-align: center; color: white;">Erro ao carregar vídeos</p>';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayVideos(videos) {
+            videoGrid.innerHTML = '';
+
+            if (videos.length === 0) {
+                videoGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; color: white; padding: 40px;">
+                        <i class="fas fa-video" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                        <h3>Nenhum vídeo encontrado</h3>
+                        <p>Seja o primeiro a compartilhar um trabalho de matemática!</p>
+                        ${!isServerOnline ? '<p style="color: #ffeb3b; margin-top: 15px;"><i class="fas fa-exclamation-triangle"></i> Execute o servidor local para fazer uploads</p>' : ''}
+                    </div>
+                `;
+                return;
+            }
+
+            videos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.onclick = () => openVideo(video);
+
+                const createdAt = video.createdAt ? 
+                    (video.createdAt.toDate ? video.createdAt.toDate().toLocaleDateString() : new Date(video.uploadDate).toLocaleDateString()) : 
+                    'Data não disponível';
+
+                // Create thumbnail
+                let thumbnailContent = '<i class="fas fa-play-circle"></i>';
+                if (video.thumbnailUrl) {
+                    thumbnailContent = `<img src="${video.thumbnailUrl}" alt="Thumbnail">`;
+                } else if (video.videoUrl && !video.isLocal) {
+                    // For non-local videos, try to create thumbnail
+                    thumbnailContent = '<i class="fas fa-play-circle"></i>';
+                }
+
+                videoCard.innerHTML = `
+                    <div class="video-thumbnail">
+                        ${thumbnailContent}
+                        ${video.isLocal ? '<div style="position: absolute; top: 10px; right: 10px; background: rgba(76, 175, 80, 0.9); color: white; padding: 4px 8px; border-radius: 10px; font-size: 10px;">LOCAL</div>' : ''}
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${video.title}</h3>
+                        <p class="video-description">${video.description || 'Sem descrição'}</p>
+                        <div class="video-meta">
+                            <div class="author">
+                                <img src="${video.authorPhoto}" style="width: 20px; height: 20px; border-radius: 50%;">
+                                <span>${video.authorName}</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: flex-end; font-size: 11px;">
+                                <span>${createdAt}</span>
+                                ${video.views ? `<span style="opacity: 0.7;">${video.views} visualizações</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                videoGrid.appendChild(videoCard);
+            });
+        }
+
+        function openVideo(video) {
+            // Increment view count if it's a local video
+            if (video.isLocal && isServerOnline) {
+                fetch(`${LOCAL_SERVER_URL}/video/${video.id || video.localVideoId}`)
+                    .catch(error => console.log('Erro ao atualizar visualizações:', error));
+            }
+
+            const videoWindow = window.open('', '_blank', 'width=900,height=700');
+            videoWindow.document.write(`
+                <html>
+                <head>
+                    <title>${video.title}</title>
+                    <style>
+                        body { 
+                            margin: 0; 
+                            padding: 20px; 
+                            font-family: Arial, sans-serif; 
+                            background: #f5f5f5;
+                        }
+                        .video-container { 
+                            max-width: 850px; 
+                            margin: 0 auto; 
+                            background: white; 
+                            border-radius: 10px; 
+                            overflow: hidden; 
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+                        }
+                        video { 
+                            width: 100%; 
+                            height: auto; 
+                            max-height: 500px;
+                        }
+                        .info { 
+                            padding: 20px; 
+                        }
+                        .title { 
+                            font-size: 24px; 
+                            font-weight: bold; 
+                            margin-bottom: 10px; 
+                        }
+                        .author { 
+                            display: flex; 
+                            align-items: center; 
+                            gap: 10px; 
+                            margin-bottom: 15px; 
+                        }
+                        .description { 
+                            color: #666; 
+                            line-height: 1.5; 
+                            margin-bottom: 15px;
+                        }
+                        .meta {
+                            font-size: 12px;
+                            color: #888;
+                            border-top: 1px solid #eee;
+                            padding-top: 15px;
+                        }
+                        .local-badge {
+                            display: inline-block;
+                            background: #4CAF50;
+                            color: white;
+                            padding: 4px 8px;
+                            border-radius: 12px;
+                            font-size: 10px;
+                            margin-left: 10px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="video-container">
+                        <video controls autoplay>
+                            <source src="${video.videoUrl}" type="video/mp4">
+                            Seu navegador não suporta vídeo HTML5.
+                        </video>
+                        <div class="info">
+                            <h1 class="title">
+                                ${video.title}
+                                ${video.isLocal ? '<span class="local-badge">SALVO LOCALMENTE</span>' : ''}
+                            </h1>
+                            <div class="author">
+                                <img src="${video.authorPhoto}" style="width: 30px; height: 30px; border-radius: 50%;">
+                                <span><strong>${video.authorName}</strong></span>
+                            </div>
+                            <p class="description">${video.description || 'Sem descrição'}</p>
+                            <div class="meta">
+                                <div>📅 Upload: ${video.createdAt ? (video.createdAt.toDate ? video.createdAt.toDate().toLocaleString() : new Date(video.uploadDate).toLocaleString()) : 'Data não disponível'}</div>
+                                ${video.size ? `<div>📁 Tamanho: ${(video.size / (1024*1024)).toFixed(1)} MB</div>` : ''}
+                                ${video.views ? `<div>👁️ Visualizações: ${video.views}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `);
+        }
+
+        // Search
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filteredVideos = allVideos.filter(video => 
+                video.title.toLowerCase().includes(query) ||
+                video.description.toLowerCase().includes(query) ||
+                video.authorName.toLowerCase().includes(query)
+            );
+            displayVideos(filteredVideos);
+        });
+
+        // Check if user is already logged in
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                showUserInterface();
+            } else {
+                showWelcomeScreen();
+            }
+        });
+
+        // File upload label update
+        document.getElementById('videoFile').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const label = document.querySelector('.file-upload-btn');
+            if (file) {
+                const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+                label.innerHTML = `<i class="fas fa-file-video"></i> ${file.name} (${sizeMB} MB)`;
+            }
+        });
+
+        // Click outside modal to close
+        uploadModal.addEventListener('click', (e) => {
+            if (e.target === uploadModal) {
+                closeUploadModal();
+            }
+        });
+    </script>
+</body>
+</html>

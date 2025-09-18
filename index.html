@@ -476,7 +476,7 @@
             <p class="welcome-subtitle">Compartilhe seus trabalhos de matemática com a turma!</p>
             
             <div class="download-section">
-                <h3 style="margin-bottom: 20px;">🖥️ Para funcionar completamente, baixe o servidor local:</h3>
+                <h3 style="margin-bottom: 20px;">🖥️ Para salvar vídeos no seu PC (opcional):</h3>
                 <button class="download-btn" onclick="downloadServerFile()">
                     <i class="fas fa-download"></i>
                     Baixar servidor.js
@@ -486,7 +486,12 @@
                     Baixar package.json
                 </button>
                 <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">
-                    Depois execute: <code>npm install</code> e <code>node servidor.js</code>
+                    <strong>Instruções:</strong><br>
+                    1. Baixe os 2 arquivos<br>
+                    2. Instale Node.js no seu PC<br>
+                    3. Execute: <code>npm install</code><br>
+                    4. Execute: <code>node servidor.js</code><br>
+                    <br><em>Se não fizer isso, o site funciona só com Firebase (sem salvar no PC)</em>
                 </p>
             </div>
             
@@ -587,6 +592,10 @@
             gapi.load('auth2', function() {
                 gapi.auth2.init({
                     client_id: '1088181975050-ki1pknaemctiac1gc80s8bt2nu5gub10.apps.googleusercontent.com'
+                }).then(function() {
+                    console.log('Google Auth inicializado');
+                }).catch(function(error) {
+                    console.error('Erro ao inicializar Google Auth:', error);
                 });
             });
             
@@ -821,13 +830,37 @@ app.listen(PORT, () => {
 
         async function signInWithGoogle() {
             try {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                const result = await auth.signInWithPopup(provider);
-                currentUser = result.user;
-                showUserInterface();
+                // Tenta usar o Google Auth API primeiro
+                const authInstance = gapi.auth2.getAuthInstance();
+                if (authInstance) {
+                    const googleUser = await authInstance.signIn();
+                    const profile = googleUser.getBasicProfile();
+                    const idToken = googleUser.getAuthResponse().id_token;
+                    
+                    // Autentica com Firebase usando o token do Google
+                    const credential = firebase.auth.GoogleAuthProvider.credential(idToken);
+                    const result = await auth.signInWithCredential(credential);
+                    currentUser = result.user;
+                    showUserInterface();
+                } else {
+                    // Fallback para o método Firebase
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    const result = await auth.signInWithPopup(provider);
+                    currentUser = result.user;
+                    showUserInterface();
+                }
             } catch (error) {
                 console.error('Erro no login:', error);
-                alert('Erro ao fazer login. Tente novamente.');
+                // Se der erro, tenta o método alternativo
+                try {
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    const result = await auth.signInWithPopup(provider);
+                    currentUser = result.user;
+                    showUserInterface();
+                } catch (fallbackError) {
+                    console.error('Erro no login fallback:', fallbackError);
+                    alert('Erro ao fazer login com Google. Verifique se os popups estão habilitados.');
+                }
             }
         }
 
@@ -870,10 +903,6 @@ app.listen(PORT, () => {
 
         // Upload Modal
         function openUploadModal() {
-            if (!isServerOnline) {
-                alert('Servidor local está offline! Baixe e execute o servidor primeiro.');
-                return;
-            }
             uploadModal.style.display = 'block';
         }
 

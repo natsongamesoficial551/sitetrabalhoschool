@@ -21,7 +21,7 @@ const VideoGallery: React.FC = () => {
       id: 1,
       title: "Vídeo Natan",
       description: "Natan Borges resolvendo a questão 2 e 7.",
-      duration: "10:30",
+      duration: "11:17",
       videoUrl: "https://www.youtube.com/watch?v=fqCemKTGZVk",
       thumbnail: "https://img.youtube.com/vi/fqCemKTGZVk/maxresdefault.jpg", // Link da internet OU undefined para usar local
     },

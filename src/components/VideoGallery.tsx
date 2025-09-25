@@ -83,11 +83,11 @@ const VideoGallery: React.FC = () => {
     },
     {
       id: 9,
-      title: "Vídeo 9",
-      description: "Descrição do vídeo 9. Conteúdo educacional sobre matemática.",
+      title: "Vídeo Cauã B.",
+      description: "Cauã Bitencourt resolvendo a questão 6 e 11.",
       duration: "14:15",
-      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
-      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 9.jpg
+      videoUrl: "https://www.youtube.com/watch?v=Z4hMqxY6uXQ", // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: "https://img.youtube.com/vi/Z4hMqxY6uXQ/maxresdefault.jpg", // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 9.jpg
     },
     {
       id: 10,

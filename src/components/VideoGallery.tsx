@@ -67,7 +67,7 @@ const VideoGallery: React.FC = () => {
     },
     {
       id: 7,
-      title: "Vídeo Breno ",
+      title: "Vídeo Breno",
       description: "Breno de Azevedo resolvendo a questão 5 e 10.",
       duration: "1:17",
       videoUrl: "https://www.youtube.com/watch?v=bwNIF-X03fs", // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
@@ -75,11 +75,11 @@ const VideoGallery: React.FC = () => {
     },
     {
       id: 8,
-      title: "Vídeo 8",
-      description: "Descrição do vídeo 8. Conteúdo educacional sobre matemática.",
+      title: "Vídeo Nath",
+      description: "Nath Pontes resolvendo a questão 4 e 9.",
       duration: "7:40",
-      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
-      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 8.jpg
+      videoUrl: "https://www.youtube.com/watch?v=QeJFLqcVbzY", // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: "https://img.youtube.com/vi/QeJFLqcVbzY/maxresdefault.jpg", // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 8.jpg
     },
     {
       id: 9,

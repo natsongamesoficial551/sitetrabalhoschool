@@ -53,7 +53,7 @@ const VideoGallery: React.FC = () => {
       id: 5,
       title: "Vídeo André",
       description: "André lucas resolvendo a questão 6 e 1.",
-      duration: "2:16",
+      duration: "2:20",
       videoUrl: "https://www.youtube.com/watch?v=6ogn5UawORY", // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
       thumbnail: "https://img.youtube.com/vi/6ogn5UawORY/maxresdefault.jpg", // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 5.jpg
     },

@@ -77,7 +77,7 @@ const VideoGallery: React.FC = () => {
       id: 8,
       title: "Vídeo Nath",
       description: "Nath Pontes resolvendo a questão 4 e 9.",
-      duration: "7:40",
+      duration: "1:17",
       videoUrl: "https://www.youtube.com/watch?v=QeJFLqcVbzY", // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
       thumbnail: "https://img.youtube.com/vi/QeJFLqcVbzY/maxresdefault.jpg", // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 8.jpg
     },

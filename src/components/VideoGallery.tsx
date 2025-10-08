@@ -19,83 +19,83 @@ const VideoGallery: React.FC = () => {
   const videoSlots = [
     {
       id: 1,
-      title: "Vídeo Natan",
-      description: "Natan Borges resolvendo a questão 2 e 7.",
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
       duration: "11:17",
-      videoUrl: "https://www.youtube.com/watch?v=fqCemKTGZVk",
-      thumbnail: "https://img.youtube.com/vi/fqCemKTGZVk/maxresdefault.jpg", // Link da internet OU undefined para usar local
+      videoUrl: undefined,
+      thumbnail: undefined, // Link da internet OU undefined para usar local
     },
     {
       id: 2,
-      title: "Vídeo Lucas",
-      description: "Lucas Gabardo resolvendo a questão 1 e 8.",
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
       duration: "1:44",
-      videoUrl: "https://www.youtube.com/watch?v=b0iL9p0kenE",
-      thumbnail: "https://img.youtube.com/vi/b0iL9p0kenE/maxresdefault.jpg", // Link da internet OU undefined para usar local
+      videoUrl: undefined,
+      thumbnail: undefined, // Link da internet OU undefined para usar local
     },
     {
       id: 3,
-      title: "Vídeo Mariana",
-      description: "Mariana Gabardo resolvendo a questão 1 e 6.",
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
       duration: "3:37",
-      videoUrl: "https://www.youtube.com/watch?v=dieU6dEjLdw",
-      thumbnail: "https://img.youtube.com/vi/dieU6dEjLdw/maxresdefault.jpg", // Link da internet OU undefined para usar local
+      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 3.jpg
     },
     {
       id: 4,
-      title: "Vídeo Nicolas",
-      description: "Nicolas De Mesquita resolvendo a questão 10 e 5.",
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
       duration: "5:04",
-      videoUrl: "https://www.youtube.com/watch?v=waKUyrTEtwo",
-      thumbnail: "https://img.youtube.com/vi/waKUyrTEtwo/maxresdefault.jpg", // Link da internet OU undefined para usar local
+      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 4.jpg
     },
     {
       id: 5,
-      title: "Vídeo André",
-      description: "André lucas resolvendo a questão 6 e 1.",
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
       duration: "2:21",
-      videoUrl: "https://www.youtube.com/watch?v=6ogn5UawORY",
-      thumbnail: "https://img.youtube.com/vi/6ogn5UawORY/maxresdefault.jpg", // Link da internet OU undefined para usar local
+      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 5.jpg
     },
     {
       id: 6,
-      title: "Vídeo Luiz Gustavo",
-      description: "Luiz Gustavo resolvendo a questão 2 e 9.",
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
       duration: "3:15",
-      videoUrl: "https://www.youtube.com/watch?v=D40bWHXYIFE",
-      thumbnail: "https://img.youtube.com/vi/D40bWHXYIFE/maxresdefault.jpg", // Link da internet OU undefined para usar local
+      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 6.jpg
     },
     {
       id: 7,
-      title: "Vídeo Breno",
-      description: "Breno de Azevedo resolvendo a questão 5 e 10.",
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
       duration: "1:17",
-      videoUrl: "https://www.youtube.com/watch?v=bwNIF-X03fs",
-      thumbnail: "https://img.youtube.com/vi/bwNIF-X03fs/maxresdefault.jpg", // Link da internet OU undefined para usar local
+      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 7.jpg
     },
     {
       id: 8,
-      title: "Vídeo Nath",
-      description: "Nath Pontes resolvendo a questão 4 e 9.",
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
       duration: "1:17",
-      videoUrl: "https://www.youtube.com/watch?v=QeJFLqcVbzY",
-      thumbnail: "https://img.youtube.com/vi/QeJFLqcVbzY/maxresdefault.jpg", // Link da internet OU undefined para usar local
+      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 8.jpg
     },
     {
       id: 9,
-      title: "Vídeo Cauã B.",
-      description: "Cauã Bitencourt resolvendo a questão 6 e 11.",
-      duration: "2:42",
-      videoUrl: "https://www.youtube.com/watch?v=Z4hMqxY6uXQ", // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
-      thumbnail: "https://i.imgur.com/NrH8enp.jpeg", // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 9.jpg
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
+      duration: "14:15",
+      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 9.jpg
     },
     {
       id: 10,
-      title: "Vídeo Ricardo",
-      description: "Ricardo Rodrigues resolvendo a questão 6 e 11.",
-      duration: "1:50",
-      videoUrl: "https://www.youtube.com/watch?v=5lvvK2whmHY", // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
-      thumbnail: "https://img.youtube.com/vi/5lvvK2whmHY/maxresdefault.jpg", // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 10.jpg
+      title: "Acesso Restrito",
+      description: "Esse vídeo não pode ser visto por questões de privacidade",
+      duration: "16:50",
+      videoUrl: undefined, // Coloque aqui: "https://www.youtube.com/watch?v=SEU_VIDEO_ID"
+      thumbnail: undefined, // Coloque aqui: "https://link-da-thumbnail.jpg" OU deixe undefined para usar /assets/thumb 10.jpg
     },
   ];
 
